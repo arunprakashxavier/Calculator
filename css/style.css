@@ -132,9 +132,28 @@ body.light-theme .btn-theme-control {
 
 @media (max-width: 520px) {
     #calculator { width: 95vw !important; padding: 15px; }
-    .buttons-grid { grid-template-columns: repeat(4, 1fr) !important; }
+    .buttons-grid {
+        grid-template-columns: repeat(4, 1fr) !important; /* Ensures 4 columns */
+        gap: 6px; /* Default gap for mobile */
+    }
     #display { height: 50px; font-size: 1.8em; padding-left: 25px; }
     #memoryIndicator { font-size: 0.6em; left: 6px; }
-    .btn { font-size: 1em; height: 48px; border-radius: 10px;}
-    .buttons-grid { gap: 6px; }
+    .btn {
+        font-size: 1em;
+        height: 48px;
+        border-radius: 10px;
+    }
+
+    /* ---- START: Added/Modified styles for Advanced Mode on Mobile ---- */
+    #calculator.advanced-mode-active .btn {
+        height: 42px; /* Make buttons a bit shorter in advanced mode on mobile */
+        font-size: 0.9em; /* Slightly smaller font in advanced mode on mobile */
+        /* If text is cut off or too tight, uncomment and adjust padding: */
+        /* padding: 0 3px; */
+    }
+
+    #calculator.advanced-mode-active .buttons-grid {
+        gap: 5px; /* Make gaps a bit smaller in advanced mode on mobile */
+    }
+    /* ---- END: Added/Modified styles for Advanced Mode on Mobile ---- */
 }
