@@ -27,33 +27,58 @@ body.light-theme #calculator h2 {
     color: #3F51B5; text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
 }
 body.light-theme #display {
-    background-color: rgba(205, 208, 219, 0.85); /* Darker for light theme display */
+    background-color: rgba(205, 208, 219, 0.85);
     color: #22272B;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 body.light-theme #memoryIndicator { color: #546E7A; }
-body.light-theme .btn {
-    background-color: rgba(0, 0, 0, 0.04); color: #455A64;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-}
-body.light-theme .btn:hover { background-color: rgba(0, 0, 0, 0.08); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12); }
-body.light-theme .btn:active { background-color: rgba(0, 0, 0, 0.02); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15); }
 
-body.light-theme .btn-operator,
-body.light-theme .btn-sign-key-style /* +/- styled as operator */ {
-    background: linear-gradient(to bottom right, #FFB74D, #FF9800); color: white;
+/* Light theme default buttons (numbers, dot, etc.) */
+body.light-theme .btn {
+    background-color: #f0f0f5;
+    color: #455A64;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #b0c4de;
 }
-body.light-theme .btn-equals { background: linear-gradient(to bottom right, #81C784, #66BB6A); color: white; }
-body.light-theme .btn-clear { background: linear-gradient(to bottom right, #E57373, #EF5350); color: white; }
+body.light-theme .btn:hover {
+    background-color: #e6e6eb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    border-color: #a0b4ce;
+}
+body.light-theme .btn:active {
+    background-color: #dcdce1;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+    border-color: #90a4be;
+}
+
+/* Light theme specific operator/functional buttons */
+body.light-theme .btn-operator,
+body.light-theme .btn-sign-key-style {
+    background: linear-gradient(to bottom right, #FFB74D, #FF9800); color: white;
+    border: none; /* Remove default border if it conflicts with gradient */
+}
+body.light-theme .btn-equals {
+    background: linear-gradient(to bottom right, #81C784, #66BB6A); color: white;
+    border: none;
+}
+body.light-theme .btn-clear {
+    background: linear-gradient(to bottom right, #E57373, #EF5350); color: white;
+    border: none;
+}
 body.light-theme .btn-memory,
 body.light-theme .btn-mode-switch,
-body.light-theme .btn-gst-style /* 9% styled as memory */ {
+body.light-theme .btn-gst-style {
     background: linear-gradient(to bottom right, #64B5F6, #42A5F5); color: white;
+    border: none;
 }
-body.light-theme .btn-backspace { background: linear-gradient(to bottom right, #B0BEC5, #90A4AE); color: white; }
+body.light-theme .btn-backspace {
+    background: linear-gradient(to bottom right, #B0BEC5, #90A4AE); color: white;
+    border: none;
+}
 body.light-theme .btn-theme-control {
     background: linear-gradient(to bottom right, #BDBDBD, #9E9E9E);
     text-shadow: none;
+    border: none;
 }
 /* --- END Light Theme --- */
 
@@ -68,24 +93,30 @@ body.light-theme .btn-theme-control {
     opacity 0.25s ease-in-out, width 0.35s ease-in-out;
     transform-origin: center center;
 }
-#calculator.initial-load-animation { animation: fadeInScalePageLoad 0.8s ease-out forwards; opacity: 0; }
+#calculator.initial-load-animation:not(.already-animated) {
+    animation: fadeInScalePageLoad 0.8s ease-out forwards;
+    opacity: 0;
+}
 .calculator-container:hover #calculator { transform: rotateX(5deg) rotateY(5deg) scale(1.02); }
-@keyframes fadeInScalePageLoad { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes fadeInScalePageLoad {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 .calculator-morph-out { opacity: 0.5 !important; transform: scale(0.97) !important; }
 .calculator-morph-in { opacity: 1 !important; transform: scale(1) !important; }
 
 #calculator h2 {
-    color: #e0e0e0; font-weight: 700; margin-top: 0; margin-bottom: 20px;
+    color: #e0e0e0; font-weight: 700; margin-top: 0; margin-bottom: 15px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.3); text-align: center; letter-spacing: 1px;
 }
 
-.display-area-wrapper { position: relative; margin-bottom: 20px; }
+.display-area-wrapper { position: relative; margin-bottom: 15px; }
 #display {
     box-sizing: border-box; width: 100%; height: 70px; font-size: 2.5em;
     text-align: right; padding: 0 18px; padding-left: 35px;
     border: none; border-radius: 12px;
-    background-color: rgba(0, 0, 0, 0.30); /* Darker display for dark theme */
+    background-color: rgba(0, 0, 0, 0.30);
     color: #ffffff; box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
@@ -96,31 +127,43 @@ body.light-theme .btn-theme-control {
     opacity: 0.9; display: none;
 }
 
-.buttons-grid { display: grid; gap: 10px; transition: opacity 0.15s ease-in-out; }
+/* Default .buttons-grid styles (primarily for DESKTOP) */
+/* Note: JS sets grid-template-columns for desktop modes */
+.buttons-grid {
+    display: grid;
+    gap: 10px;
+    transition: opacity 0.15s ease-in-out;
+}
 .buttons-grid.grid-fade-out { opacity: 0.3; }
 .buttons-grid.grid-fade-in { opacity: 1; transition-delay: 0.15s; }
 
+/* Default .btn styles (primarily for DESKTOP) */
 .btn {
-    font-size: 1.3em; height: 55px; border: none; border-radius: 12px;
+    font-size: 1.3em;
+    height: 55px;
+    border: none; /* Base buttons have no border unless themed */
+    border-radius: 12px;
     transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); color: white;
     background-color: rgba(255, 255, 255, 0.05); cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    padding: 0 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    padding: 0 5px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    box-sizing: border-box;
 }
 .btn:hover { transform: translateY(-4px) scale(1.02); }
 .btn:active { transform: translateY(0) scale(0.98); }
 
+/* Specific button type styles (DESKTOP & DARK THEME MOBILE DEFAULT if not overridden by light theme) */
 .btn-operator, .btn-sign-key-style { background: linear-gradient(to bottom right, #ff9900, #ff6600); }
-.btn-equals { background: linear-gradient(to bottom right, #4CAF50, #2E7D32); /* No fixed span */ }
+.btn-equals { background: linear-gradient(to bottom right, #4CAF50, #2E7D32); }
 .btn-clear { background: linear-gradient(to bottom right, #f44336, #d32f2f); }
 .btn-memory, .btn-mode-switch, .btn-gst-style { background: linear-gradient(to bottom right, #00BCD4, #0097A7); }
 .btn-backspace { background: linear-gradient(to bottom right, #546E7A, #37474F); }
-
 .btn-theme-control {
     background: linear-gradient(to bottom right, #757575, #424242);
     text-shadow: 0 0 4px #FFF, 0 0 8px #FFF, 0 0 12px #ffc107, 0 0 15px #ff9800, 0 0 20px #ff8c00;
-    font-size: 1.5em;
+    font-size: 1.5em; /* Desktop theme control size */
 }
 
 .btn-press-animation { animation: buttonPress 0.15s ease-out; }
@@ -130,30 +173,105 @@ body.light-theme .btn-theme-control {
     to { transform: scale(1); }
 }
 
+
+/* ========================================================================== */
+/* --- MOBILE STYLES (max-width: 520px) --- START OF MEDIA QUERY BLOCK --- */
+/* ========================================================================== */
 @media (max-width: 520px) {
-    #calculator { width: 95vw !important; padding: 15px; }
-    .buttons-grid {
-        grid-template-columns: repeat(4, 1fr) !important; /* Ensures 4 columns */
-        gap: 6px; /* Default gap for mobile */
+    #calculator {
+        width: 95vw !important;
+        padding: 8px; /* Reduced padding for more space */
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
-    #display { height: 50px; font-size: 1.8em; padding-left: 25px; }
-    #memoryIndicator { font-size: 0.6em; left: 6px; }
-    .btn {
+    #calculator h2 {
+        font-size: 1.2em;
+        margin-bottom: 8px;
+    }
+    .display-area-wrapper {
+        margin-bottom: 8px;
+    }
+    #display {
+        height: 38px;
+        font-size: 1.6em;
+        padding: 0 8px;
+        padding-left: 20px;
+    }
+    #memoryIndicator {
+        font-size: 0.45em;
+        left: 3px;
+    }
+
+    /* General Mobile Button Styles (applied to all buttons within #calculator on mobile) */
+    #calculator .btn { /* Specificity to ensure these apply on mobile */
+        font-size: 0.7em; /* Adjusted for sketch, can be tweaked */
+        border-radius: 5px;
+        padding: 0 1px;
+        width: 100%;  /* Fill grid cell */
+        height: 100%; /* Fill grid cell */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* box-sizing: border-box; is inherited */
+        /* overflow, text-overflow, white-space are inherited */
+    }
+    #calculator .btn-theme-control { /* Make theme button consistent on mobile */
         font-size: 1em;
-        height: 48px;
-        border-radius: 10px;
     }
 
-    /* ---- START: Added/Modified styles for Advanced Mode on Mobile ---- */
-    #calculator.advanced-mode-active .btn {
-        height: 42px; /* Make buttons a bit shorter in advanced mode on mobile */
-        font-size: 0.9em; /* Slightly smaller font in advanced mode on mobile */
-        /* If text is cut off or too tight, uncomment and adjust padding: */
-        /* padding: 0 3px; */
+
+    /* --- Basic Mode Mobile Grid (4 Columns, 5 Rows) --- */
+    #calculator:not(.advanced-mode-active) .buttons-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr) !important;
+        grid-auto-rows: minmax(36px, auto); /* Auto row height for basic buttons */
+        gap: 3px;
+    }
+    #calculator:not(.advanced-mode-active) .btn {
+        /* Basic mobile buttons can be slightly larger if desired */
+        font-size: 0.85em;
+        height: 36px; /* Fixed height for basic buttons, or use 100% of auto-row */
+        /* If using fixed height, ensure width:auto or it might not fill cell if cell is wider */
     }
 
+
+    /* --- Advanced Mode Mobile Grid (Sketch Layout - 4 Columns, 8 Explicit Rows) --- */
     #calculator.advanced-mode-active .buttons-grid {
-        gap: 5px; /* Make gaps a bit smaller in advanced mode on mobile */
+        display: grid;
+        grid-template-columns: repeat(4, 1fr) !important;
+        /* Define 8 rows. Adjust 32px based on final button content and padding */
+        grid-template-rows: repeat(8, minmax(32px, auto));
+        gap: 3px; /* Tighter gap for the sketch layout */
     }
-    /* ---- END: Added/Modified styles for Advanced Mode on Mobile ---- */
+    /* Buttons in advanced mobile grid will use the #calculator .btn style:
+       font-size: 0.7em (from #calculator .btn)
+       height: 100% (from #calculator .btn, fills the grid-template-rows height)
+       padding: 0 1px (from #calculator .btn)
+    */
+
+    /* Specific placements for Advanced Mode Sketch Layout using Button IDs */
+    #calculator.advanced-mode-active #calc-btn-std {
+        grid-area: 7 / 1 / 9 / 2; /* Row start 7, Col start 1, Row end 9 (spans 2 rows), Col end 2 */
+    }
+    #calculator.advanced-mode-active #calc-btn-equals {
+        grid-area: 7 / 4 / 9 / 5; /* Row start 7, Col start 4, Row end 9 (spans 2 rows), Col end 5 */
+    }
+    #calculator.advanced-mode-active #calc-btn-zero {
+        grid-area: 7 / 2 / 8 / 3; /* Row 7, Col 2 */
+    }
+    #calculator.advanced-mode-active #calc-btn-dot {
+        grid-area: 7 / 3 / 8 / 4; /* Row 7, Col 3 */
+    }
+    /* Previous request: interchange √ and +/-. √ becomes auto-flowed at R1C4. */
+    /* +/- (ID: calc-btn-plus-minus) goes to where √ was in sketch R8C3. */
+    /* 9% (ID: calc-btn-gst9) goes to where +/- was in sketch R8C2. */
+    #calculator.advanced-mode-active #calc-btn-gst9 { /* "9%" button */
+        grid-area: 8 / 2 / 9 / 3; /* Sketch R8, C2 (Original Sqrt after its own swap, then PlusMinus after its swap) */
+    }
+    #calculator.advanced-mode-active #calc-btn-plus-minus { /* "+/-" button */
+        grid-area: 8 / 3 / 9 / 4; /* Sketch R8, C3 (Original Dot, then Sqrt after its swap) */
+    }
+    /* #calc-btn-sqrt no longer needs a rule, it auto-flows into R1C4 via JS config */
+
 }
+/* ======================================================================== */
